@@ -5,7 +5,7 @@ import Dialog, { DialogTitle, DialogContent, DialogContentText, DialogActions } 
 import Typography from 'material-ui/Typography';
 import { withStyles } from 'material-ui/styles';
 import withRoot from '../src/withRoot';
-
+import PageLayout from '../components/PageLayout';
 const styles = theme => ({
   root: {
     textAlign: 'center',
@@ -35,28 +35,30 @@ class Index extends React.Component {
     const { open } = this.state;
 
     return (
-      <div className={classes.root}>
-        <Dialog open={open} onClose={this.handleClose}>
-          <DialogTitle>Super Secret Password</DialogTitle>
-          <DialogContent>
-            <DialogContentText>1-2-3-4-5</DialogContentText>
-          </DialogContent>
-          <DialogActions>
-            <Button color="primary" onClick={this.handleClose}>
-              OK
-            </Button>
-          </DialogActions>
-        </Dialog>
-        <Typography variant="display1" gutterBottom>
-          Material-UI
-        </Typography>
-        <Typography variant="subheading" gutterBottom>
-          example project
-        </Typography>
-        <Button variant="raised" color="secondary" onClick={this.handleClick}>
-          Super Secret Password
-        </Button>
-      </div>
+      <PageLayout>
+        <div className={classes.root}>
+          <Dialog open={open} onClose={this.handleClose}>
+            <DialogTitle>Super Secret Password</DialogTitle>
+            <DialogContent>
+              <DialogContentText>1-2-3-4-5</DialogContentText>
+            </DialogContent>
+            <DialogActions>
+              <Button color="primary" onClick={this.handleClose}>
+                OK
+              </Button>
+            </DialogActions>
+          </Dialog>
+          <Typography variant="display1" gutterBottom>
+            Material-UI
+          </Typography>
+          <Typography variant="subheading" gutterBottom>
+            example project
+          </Typography>
+          <Button variant="raised" color="secondary" onClick={this.handleClick}>
+            Super Secret Password
+          </Button>
+        </div>
+      </PageLayout>
     );
   }
 }
