@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import { Typography } from 'material-ui';
+import Typography from '@material-ui/core/Typography';
 import PageLayout from '../components/PageLayout';
-import { withStyles } from 'material-ui/styles';
+import { withStyles } from '@material-ui/core/styles';
 import withRoot from '../src/withRoot';
 const styles = theme => ({
   root: {

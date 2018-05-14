@@ -1,0 +1,7 @@
+ query {
+  allPosts(first:3) {
+    title
+    id
+    createdAt 
+  }
+}

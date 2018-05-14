@@ -3,5 +3,6 @@
     [
       "next/babel"
     ]
-  ]
+  ],
+  "plugins": ["inline-import-graphql-ast"]
 }

@@ -1,10 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Button from 'material-ui/Button';
-import { withStyles } from 'material-ui/styles';
+import Button from '@material-ui/core/Button';
+import { withStyles } from '@material-ui/core/styles';
 import Header from '../Header';
 import Link from 'next/link';
-import Grid from 'material-ui/Grid';
+
 const styles = theme => ({
   root: {
     textAlign: 'center',
@@ -30,9 +30,7 @@ class PageLayout extends React.Component {
             </Button>
           </Link>
         </Header>
-        <Grid container spacing={24}>
-          {children}
-        </Grid>
+        {children}
       </React.Fragment>
     );
   }
