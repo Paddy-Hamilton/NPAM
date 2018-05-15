@@ -1,5 +1,5 @@
- query {
-  allPosts(first:3) {
+ query getAllPosts($first:Int!,$skip: Int!) {
+  allPosts(first:$first,skip:$skip) {
     title
     id
     createdAt 

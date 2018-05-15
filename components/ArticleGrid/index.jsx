@@ -6,15 +6,16 @@ import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 const styles = theme => ({
   root: {
-    padding: '0 12px'
+    padding: '0 12px',
+    margin: '0 auto'
   },
   grid: {
     marginTop: 0
   },
-  item: {
+  post: {
     position: 'relative'
   },
-  itemTextContainer: {
+  postTextContainer: {
     textAlign: 'left',
     paddingTop: theme.spacing.unit * 20,
     width: '100%',
@@ -25,27 +26,31 @@ const styles = theme => ({
   }
 });
 class ArticleGrid extends Component {
+  shouldComponentUpdate(nextProps, nextState) {
+    return nextProps.allPosts.length !== this.props.allPosts.length;
+  }
+
   render() {
-    const { items, classes } = this.props;
+    const { allPosts, classes } = this.props;
     return (
       <div className={classes.root}>
         <Grid container spacing={24} className={classes.grid}>
-          {items &&
-            items.map(it => (
-              <Grid key={it.id || it.title} item xs={12} md={6} lg={4} className={classes.item}>
+          {allPosts &&
+            allPosts.map(post => (
+              <Grid key={post.id || post.title} item xs={12} md={6} lg={4} className={classes.post}>
                 <Card>
                   <CardContent>
                     <div>
-                      <h3>{it.title}</h3>
+                      <h3>{post.title}</h3>
                       <p>
-                        <small>{it.createdAt}</small>
+                        <small>{post.createdAt}</small>
                       </p>
                     </div>
                   </CardContent>
                 </Card>
               </Grid>
             ))}
-          {!items && (
+          {allPosts.length === 0 && (
             <Grid item xs={12}>
               <p>No items do display</p>
             </Grid>
@@ -57,7 +62,7 @@ class ArticleGrid extends Component {
 }
 
 ArticleGrid.propTypes = {
-  items: PropTypes.array
+  allPosts: PropTypes.array.isRequired
 };
 
 export default withStyles(styles)(ArticleGrid);

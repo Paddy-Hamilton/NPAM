@@ -6,7 +6,8 @@ import withRoot from '../src/withRoot';
 const styles = theme => ({
   root: {
     textAlign: 'center',
-    paddingTop: theme.spacing.unit * 20
+    paddingTop: theme.spacing.unit * 20,
+    margin: '0 auto'
   }
 });
 class About extends Component {
