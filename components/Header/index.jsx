@@ -5,23 +5,27 @@ import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 
-const styles = {
+const styles = theme => ({
   root: {
     flexGrow: 1
+  },
+  appBar: {
+    background: `linear-gradient(45deg, ${theme.palette.primary.dark} 30%, ${theme.palette.secondary.light} 90%)`,
+    color: '#fff'
   },
   toolbar: {
     display: 'flex',
     justifyContent: 'space-between',
     alignitems: 'center'
   }
-};
+});
 
 class Header extends Component {
   render() {
     const { classes, name, children } = this.props;
     return (
       <div className={classes.root}>
-        <AppBar position="static" color="default">
+        <AppBar position="static" className={classes.appBar}>
           <Toolbar className={classes.toolbar}>
             <Typography variant="title" color="inherit">
               {name}

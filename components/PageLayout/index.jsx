@@ -9,6 +9,9 @@ const styles = theme => ({
   root: {
     textAlign: 'center',
     paddingTop: theme.spacing.unit * 20
+  },
+  btn: {
+    color: theme.palette.primary.dark
   }
 });
 
@@ -19,12 +22,12 @@ class PageLayout extends React.Component {
       <React.Fragment>
         <Header name="Next/Material/Apollo">
           <Link href="/">
-            <Button>
+            <Button className={classes.btn}>
               <a>Home</a>
             </Button>
           </Link>
           <Link href="/about">
-            <Button>
+            <Button className={classes.btn}>
               <a>About</a>
             </Button>
           </Link>

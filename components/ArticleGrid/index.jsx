@@ -18,32 +18,24 @@ const styles = theme => ({
   post: {
     position: 'relative',
     cursor: 'pointer',
-    transition: 'background 0.3s ease-in-out,boxShadow 0.3s ease-in-out',
-
-    '& > div': {
-      background: 'rgba(255,255,255,1)',
-      transition: 'background 0.3s ease-in-out'
-    },
+    height:'100%',
+    transition: 'background 0.3s ease-in-out',
     '&:hover,&:focus': {
-      background: `linear-gradient(45deg, ${theme.palette.primary.main} 30%, ${theme.palette.secondary.main} 90%)`,
-      transition: 'boxShadow 0.3s ease-in-out',
-      '& > div': {
-        background: 'rgba(255,255,255,0)',
-        transition: 'background 0.3s ease-in-out'
-      },
+      background: theme.palette.secondary.xlight,
+      transition: 'background 0.3s ease-in-out',
       '& $link,& $date': {
-        color: 'white',
-        transition: 'color 0.3s ease-in-out'
+        // color: 'white',
+        // transition: 'color 0.3s ease-in-out'
       }
     }
   },
   link: {
-    color: theme.palette.primary.main,
+    color: theme.palette.primary.dark,
     textDecoration: 'none',
     transition: 'color 0.3s ease-in-out'
   },
   date: {
-    color: theme.palette.secondary.main,
+    color: theme.palette.primary.light,
     transition: 'color 0.3s ease-in-out'
   },
   postTextContainer: {
@@ -81,7 +73,7 @@ class ArticleGrid extends Component {
 
     return (
       <div className={classes.root}>
-        <Grid container spacing={24} className={classes.grid}>
+        <Grid container spacing={24} className={classes.grid} alignItems="stretch">
           {allPosts &&
             allPosts.map((post, i) => (
               <Grow in timeout={incrimentTimeout()} key={post.id || post.title}>
