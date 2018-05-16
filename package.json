@@ -17,6 +17,7 @@
     "moment": "^2.22.1",
     "next": "^6.0.2",
     "next-apollo": "^1.0.13",
+    "next-with-apollo": "^2.1.2",
     "prop-types": "latest",
     "react": "^16.2.0",
     "react-apollo": "^2.1.4",

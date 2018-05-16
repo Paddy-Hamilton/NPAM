@@ -17,4 +17,4 @@ class Index extends React.Component {
   }
 }
 
-export default withData(Index);
+export default Index;

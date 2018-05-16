@@ -10,6 +10,14 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 // here we use App from next/app and wrap it with withData so we can get Apollo and SSR
 
 class MyApp extends App {
+  static async getInitialProps({ Component, ctx }) {
+    let pageProps = {};
+    if (Component.getInitialProps) {
+      pageProps = await Component.getInitialProps(ctx);
+    }
+    pageProps.query = ctx.query;
+    return { pageProps };
+  }
   constructor(props, context) {
     super(props, context);
     this.pageContext = this.props.pageContext || getPageContext();
@@ -23,17 +31,7 @@ class MyApp extends App {
       jssStyles.parentNode.removeChild(jssStyles);
     }
   }
-  static async getInitialProps({ Component, ctx }) {
-    let pageProps = {};
 
-    if (Component.getInitialProps) {
-      pageProps = await Component.getInitialProps(ctx);
-    }
-
-    pageProps.query = ctx.query;
-
-    return { pageProps };
-  }
   render() {
     const { Component, pageProps, apollo } = this.props;
 

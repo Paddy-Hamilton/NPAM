@@ -23,4 +23,4 @@ class About extends Component {
   }
 }
 
-export default withData(withStyles(styles)(About));
+export default withStyles(styles)(About);
