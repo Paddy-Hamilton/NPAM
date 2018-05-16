@@ -41,9 +41,7 @@ class MyApp extends App {
           <MuiThemeProvider theme={this.pageContext.theme} sheetsManager={this.pageContext.sheetsManager}>
             {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
             <CssBaseline />
-            <PageLayout>
-              <Component {...pageProps} />
-            </PageLayout>
+            <Component {...pageProps} />
           </MuiThemeProvider>
         </ApolloProvider>
       </Container>
