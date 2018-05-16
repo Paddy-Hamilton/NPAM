@@ -3,5 +3,6 @@
     title
     id
     createdAt 
+    url
   }
 }

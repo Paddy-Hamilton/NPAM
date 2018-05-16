@@ -1,5 +1,5 @@
  query {
-  _allPostsMeta  {
+  _allPostsMeta @connection(key:"postCount") {
     count
   }  
 }

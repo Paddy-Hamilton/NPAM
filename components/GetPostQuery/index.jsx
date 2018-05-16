@@ -55,7 +55,7 @@ class GetPostQuery extends Component {
             <Query
               query={GET_POSTS}
               variables={{
-                first: 10,
+                first: 20,
                 skip: 0
               }}
               fetchPolicy="cache-and-network"
