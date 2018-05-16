@@ -18,7 +18,7 @@ const styles = theme => ({
   post: {
     position: 'relative',
     cursor: 'pointer',
-    height:'100%',
+    height: '100%',
     transition: 'background 0.3s ease-in-out',
     '&:hover,&:focus': {
       background: theme.palette.secondary.xlight,

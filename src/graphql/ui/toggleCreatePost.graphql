@@ -1,0 +1,3 @@
+  mutation ToggleCreatePost($open: Boolean!) {
+     toggleAddPost(open: $open) @client 
+  }

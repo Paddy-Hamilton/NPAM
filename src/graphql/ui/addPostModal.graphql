@@ -1,0 +1,3 @@
+query ADD_POST_MODAL_OPEN {
+  createPostOpen @client
+}

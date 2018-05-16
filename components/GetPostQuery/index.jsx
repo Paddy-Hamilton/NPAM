@@ -48,7 +48,7 @@ class GetPostQuery extends Component {
             _allPostsMeta: { count }
           }
         }) => {
-          if (loading) <p>Loading...</p>;
+          if (loading) return <p>Loading...</p>;
           if (error) return `Error! ${error.message}`;
 
           return (
