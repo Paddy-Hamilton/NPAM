@@ -5,7 +5,7 @@ import Button from '@material-ui/core/Button';
 import AddIcon from '@material-ui/icons/Add';
 import Icon from '@material-ui/core/Icon';
 import { Mutation } from 'react-apollo';
-import TOGGLE_CREATE_POST from '../../src/graphql/ui/toggleCreatePost.graphql';
+import { TOGGLE_POST_MODAL_OPEN } from '../../graphql/queries.graphql';
 const styles = theme => ({
   btn: {
     position: 'fixed',
@@ -19,9 +19,15 @@ class CreatePostBtn extends Component {
     const { classes } = this.props;
     return (
       <React.Fragment>
-        <Mutation mutation={TOGGLE_CREATE_POST} variables={{ open: true }}>
-          {toggleAddPost => (
-            <Button variant="fab" color="primary" aria-label="add" className={classes.btn} onClick={toggleAddPost}>
+        <Mutation mutation={TOGGLE_POST_MODAL_OPEN}>
+          {toggleCreatePostModal => (
+            <Button
+              variant="fab"
+              color="primary"
+              aria-label="add"
+              className={classes.btn}
+              onClick={toggleCreatePostModal}
+            >
               <AddIcon />
             </Button>
           )}
