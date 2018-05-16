@@ -15,7 +15,7 @@
     "isomorphic-unfetch": "^2.0.0",
     "jss": "latest",
     "moment": "^2.22.1",
-    "next": "^5.0.0",
+    "next": "^6.0.2",
     "next-apollo": "^1.0.13",
     "prop-types": "latest",
     "react": "^16.2.0",
@@ -30,8 +30,31 @@
     "start": "rimraf node_modules/.cache && next start"
   },
   "devDependencies": {
+    "babel-loader": "^7.1.4",
     "babel-plugin-inline-import-graphql-ast": "^2.3.7",
     "graphql-import": "^0.5.2",
-    "next-plugin-graphql": "0.0.1"
+    "next-plugin-graphql": "0.0.1",
+    "next-with-apollo": "^2.1.0"
+  },
+  "babel": {
+    "env": {
+      "development": {
+        "presets": [
+          "next/babel"
+        ]
+      },
+      "production": {
+        "presets": [
+          "next/babel"
+        ]
+      },
+      "test": {
+        "presets": [
+          [
+            "next/babel"
+          ]
+        ]
+      }
+    }
   }
 }

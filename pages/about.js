@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import Typography from '@material-ui/core/Typography';
 import PageLayout from '../components/PageLayout';
 import { withStyles } from '@material-ui/core/styles';
-import withRoot from '../src/withRoot';
+import withData from '../lib/withData';
 const styles = theme => ({
   root: {
     textAlign: 'center',
@@ -23,4 +23,4 @@ class About extends Component {
   }
 }
 
-export default withRoot(withStyles(styles)(About));
+export default withData(withStyles(styles)(About));
