@@ -14,9 +14,11 @@ class GetPostQuery extends Component {
       },
       updateQuery: (prev, { fetchMoreResult }) => {
         if (!fetchMoreResult) return prev;
-        return Object.assign({}, prev, {
-          allPosts: [...prev.allPosts, ...fetchMoreResult.allPosts]
+        const newUnique = fetchMoreResult.allPosts.filter(pm => prev.allPosts.findIndex(pr => pr.id === pm.id) === -1);
+        const newData = Object.assign({}, prev, {
+          allPosts: [...prev.allPosts, ...newUnique]
         });
+        return newData;
       }
     });
   };
@@ -42,14 +44,15 @@ class GetPostQuery extends Component {
                 skip: 0
               }}
               fetchPolicy="cache-and-network"
+              notifyOnNetworkStatusChange={true}
             >
-              {({ loading, error, data: { allPosts }, fetchMore }) => {
+              {({ loading, error, networkStatus, data: { allPosts }, fetchMore }) => {
                 if (loading) <p>Loading...</p>;
                 if (error) return `Error! ${error.message}`;
                 return (
                   <InfiniteScroll
                     pageStart={0}
-                    loadMore={() => this.loadMorePosts(fetchMore, allPosts)}
+                    loadMore={() => (networkStatus === 7 ? this.loadMorePosts(fetchMore, allPosts) : null)}
                     hasMore={count > allPosts.length}
                     loader={
                       <div className="loader" key={0}>
