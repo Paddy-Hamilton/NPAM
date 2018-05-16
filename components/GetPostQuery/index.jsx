@@ -6,21 +6,36 @@ import GET_POSTS_COUNT from '../../src/graphql/postsCount.graphql';
 import InfiniteScroll from 'react-infinite-scroller';
 
 class GetPostQuery extends Component {
-  loadMorePosts = (fetchMore, allPosts) => {
-    fetchMore({
-      variables: {
-        skip: allPosts.length,
-        first: 20
-      },
-      updateQuery: (prev, { fetchMoreResult }) => {
-        if (!fetchMoreResult) return prev;
-        const newUnique = fetchMoreResult.allPosts.filter(pm => prev.allPosts.findIndex(pr => pr.id === pm.id) === -1);
-        const newData = Object.assign({}, prev, {
-          allPosts: [...prev.allPosts, ...newUnique]
-        });
-        return newData;
-      }
-    });
+  constructor(props) {
+    super(props);
+    this.state = {
+      currentfetchedSkip: 0
+    };
+  }
+  loadMorePosts = (fetchMore, currentPostCount) => {
+    const { currentfetchedSkip } = this.state;
+    if (currentfetchedSkip === currentPostCount) return true;
+    this.setState({ currentfetchedSkip: currentPostCount }, () =>
+      fetchMore({
+        variables: {
+          skip: currentPostCount,
+          first: 20
+        },
+        updateQuery: (prev, { fetchMoreResult }) => {
+          if (!fetchMoreResult) return prev;
+          const newUnique = fetchMoreResult.allPosts.filter(
+            pm => prev.allPosts.findIndex(pr => pr.id === pm.id) === -1
+          );
+          if (newUnique.length === 0) {
+            return null;
+          }
+          const newData = Object.assign({}, prev, {
+            allPosts: [...prev.allPosts, ...newUnique]
+          });
+          return newData;
+        }
+      })
+    );
   };
 
   render() {
@@ -52,7 +67,7 @@ class GetPostQuery extends Component {
                 return (
                   <InfiniteScroll
                     pageStart={0}
-                    loadMore={() => (networkStatus === 7 ? this.loadMorePosts(fetchMore, allPosts) : null)}
+                    loadMore={() => (networkStatus === 7 ? this.loadMorePosts(fetchMore, allPosts.length) : null)}
                     hasMore={count > allPosts.length}
                     loader={
                       <div className="loader" key={0}>
