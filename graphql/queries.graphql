@@ -1,4 +1,4 @@
-query CREATE_POST_MODAL_OPEN{
+query CREATE_POST_MODAL_OPEN {
   createPostModalOpen @client
 }
 mutation TOGGLE_POST_MODAL_OPEN {

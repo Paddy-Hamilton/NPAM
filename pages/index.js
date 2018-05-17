@@ -5,6 +5,7 @@ import PageLayout from '../components/PageLayout';
 import ArticleGrid from '../components/ArticleGrid';
 import GetPostQuery from '../components/GetPostQuery';
 import CreatePostBtn from '../components/CreatePost';
+import CreatePostModal from '../components/CreatePostModal';
 
 class Index extends React.Component {
   render() {
@@ -12,6 +13,7 @@ class Index extends React.Component {
       <PageLayout>
         <GetPostQuery render={allPosts => <ArticleGrid allPosts={allPosts} />} />
         <CreatePostBtn />
+        <CreatePostModal />
       </PageLayout>
     );
   }
