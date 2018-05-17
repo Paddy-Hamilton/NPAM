@@ -29,7 +29,6 @@ class CreatePostModal extends Component {
     return (
       <Composed>
         {({ isOpen, toggle }) => {
-          console.log({ toggle, isOpen });
           if (isOpen.loading || toggle.loading) console.log('loading', { isOpen, toggle });
           if (isOpen.error || toggle.error) console.error({ isOpen, toggle });
           return (
