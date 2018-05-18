@@ -7,9 +7,9 @@ import Link from 'next/link';
 import Grid from '@material-ui/core/Grid';
 import { Query, Mutation } from 'react-apollo';
 import { adopt } from 'react-adopt';
-import { SIGNIN, SIGNOUT } from '../../graphql/mutations.graphql';
+import { TOGGLE_SIGNIN_MODAL, SIGNOUT } from '../../graphql/mutations.graphql';
 import { CURRENT_USER } from '../../graphql/queries.graphql';
-console.log('PageLayout', { SIGNIN, SIGNOUT, CURRENT_USER });
+
 const styles = theme => ({
   root: {
     textAlign: 'center',
@@ -22,7 +22,7 @@ const styles = theme => ({
 
 const Composed = adopt({
   currentUser: <Query query={CURRENT_USER}>{() => {}}</Query>,
-  signin: <Mutation mutation={SIGNIN}>{() => {}}</Mutation>,
+  toggleSigninModal: <Mutation mutation={TOGGLE_SIGNIN_MODAL}>{() => {}}</Mutation>,
   signout: <Mutation mutation={SIGNOUT}>{() => {}}</Mutation>
 });
 
@@ -43,12 +43,12 @@ class PageLayout extends React.Component {
             </Button>
           </Link>
           <Composed>
-            {({ currentUser, signout, signin }) => {
-              console.log({ currentUser });
+            {({ currentUser, signout, toggleSigninModal }) => {
+              console.log(currentUser.error, currentUser.data);
 
               return (
-                <Button className={classes.btn} onClick={() => (currentUser.data ? signout : signin)}>
-                  <a>{!currentUser.data ? 'Sign in' : 'Sign out'}</a>
+                <Button className={classes.btn} onClick={() => (currentUser.data ? signout : toggleSigninModal)}>
+                  <a>{!currentUser.data || currentUser.error ? 'Sign in' : 'Sign out'}</a>
                 </Button>
               );
             }}

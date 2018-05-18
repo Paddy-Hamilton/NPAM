@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Query } from 'react-apollo';
-import { ALL_POST_QUERY } from '../../graphql/queries.graphql';
+import { ALL_POST } from '../../graphql/queries.graphql';
 import InfiniteScroll from 'react-infinite-scroller';
 
 class GetPostQuery extends Component {
@@ -38,7 +38,7 @@ class GetPostQuery extends Component {
   render() {
     return (
       <Query
-        query={ALL_POST_QUERY}
+        query={ALL_POST}
         variables={{
           first: 20,
           skip: 0
@@ -50,30 +50,32 @@ class GetPostQuery extends Component {
           loading,
           error,
           networkStatus,
-          data: {
-            posts,
-            postsConnection: {
-              aggregate: { count }
-            }
-          },
+          data,
+          // data: {
+          //   posts,
+          //   postsConnection: {
+          //     aggregate: { count }
+          //   }
+          // },
           fetchMore
         }) => {
           if (loading) <p>Loading...</p>;
           if (error) return `Error! ${error.message}`;
-          console.log('posts.length', posts.length);
+          console.log('GetPostQuery', { data });
           return (
-            <InfiniteScroll
-              pageStart={0}
-              loadMore={() => (networkStatus === 7 ? this.loadMorePosts(fetchMore, posts.length) : null)}
-              hasMore={count > posts.length}
-              loader={
-                <div className="loader" key={0}>
-                  Loading ...
-                </div>
-              }
-            >
-              {this.props.render(posts)}
-            </InfiniteScroll>
+            <p>Help</p>
+            // <InfiniteScroll
+            //   pageStart={0}
+            //   loadMore={() => (networkStatus === 7 ? this.loadMorePosts(fetchMore, posts.length) : null)}
+            //   hasMore={count > posts.length}
+            //   loader={
+            //     <div className="loader" key={0}>
+            //       Loading ...
+            //     </div>
+            //   }
+            // >
+            //   {this.props.render(posts)}
+            // </InfiniteScroll>
           );
         }}
       </Query>

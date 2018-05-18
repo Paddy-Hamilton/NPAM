@@ -1,11 +1,14 @@
 import withApollo from 'next-with-apollo';
 import ApolloClient from 'apollo-boost';
-import { CREATE_POST_MODAL_OPEN } from '../graphql/queries.graphql';
+import { CREATE_POST_MODAL_OPEN, SIGNIN_MODAL_OPEN } from '../graphql/queries.graphql';
 // can also be a function that accepts a `headers` object (SSR only) and returns a config
 const isBrowser = new Function('try {return this===window;}catch(e){ return false;}');
 function createClient({ headers }) {
   return new ApolloClient({
-    uri: 'https://eu1.prisma.sh/paddy-hamilton-edb868/backend/dev',
+    uri:
+      process.env.NODE_ENV === 'development'
+        ? 'http://localhost:4444'
+        : 'https://eu1.prisma.sh/paddy-hamilton-edb868/backend/dev',
     connectToDevTools: true,
     ssrMode: !process.browser, // Disables forceFetch on the server (so queries are only run once)
     request: async operation => {
@@ -35,6 +38,12 @@ function createClient({ headers }) {
             cache.writeData(data);
             return data;
           },
+          toggleSigninModal(_, variables, { cache }) {
+            const { signinModalOpen } = cache.read({ query: SIGNIN_MODAL_OPEN });
+            const data = { data: { signinModalOpen: !signinModalOpen } };
+            cache.writeData(data);
+            return data;
+          },
           signout(_, vars, ctx) {
             if (isBrowser() && localStorage.getItem('nmgqlUserId')) {
               localStorage.removeItem('nmgqlUserId');
@@ -44,7 +53,8 @@ function createClient({ headers }) {
         }
       },
       defaults: {
-        createPostModalOpen: false
+        createPostModalOpen: false,
+        signinModalOpen: false
       }
     }
   });

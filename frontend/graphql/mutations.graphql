@@ -1,6 +1,3 @@
-mutation TOGGLE_POST_MODAL_OPEN {
-  toggleCreatePostModal @client
-}
 
 
 mutation SIGNIN($email: String!, $password: String!) {
@@ -11,6 +8,15 @@ mutation SIGNIN($email: String!, $password: String!) {
   }
 }
 
+# local
 mutation SIGNOUT {
   signout @client
+}
+
+mutation TOGGLE_POST_MODAL_OPEN {
+  toggleCreatePostModal @client
+}
+
+mutation TOGGLE_SIGNIN_MODAL {
+  toggleSigninModal @client
 }

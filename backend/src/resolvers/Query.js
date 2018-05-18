@@ -33,7 +33,8 @@ const Query = {
     info
   ) {
     if (!userId) {
-      throw new Error("You must be logged in to view me");
+      return null;
+      return new Error("You must be logged in to view me");
     }
     return db.query.user({ where: { id: userId } }, info);
   }

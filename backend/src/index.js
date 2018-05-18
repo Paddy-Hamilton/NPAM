@@ -8,7 +8,6 @@ const server = createServer();
 
 server.express.use((req, res, next) => {
   const Authorization = req.get("Authorization");
-  console.log({ Authorization });
   if (Authorization) {
     const token = Authorization.replace("Bearer ", "");
     const { userId } = jwt.verify(token, process.env.APP_SECRET);
@@ -31,7 +30,7 @@ server.start(
   {
     cors: {
       credentials: true,
-      origin: process.env.FRONTEND_URL
+      origin: "http://localhost:3000"
     },
     port: 4444
   },
