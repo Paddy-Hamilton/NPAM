@@ -1,4 +1,0 @@
-mutation TOGGLE_POST_MODAL_OPEN {
-  toggleCreatePostModal @client
-}
-

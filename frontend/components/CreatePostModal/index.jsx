@@ -4,8 +4,8 @@ import { Query, Mutation } from 'react-apollo';
 import Modal from '@material-ui/core/Modal';
 import { withStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
-import { CREATE_POST_MODAL_OPEN } from '../../src/graphql/queries.graphql';
-import { TOGGLE_POST_MODAL_OPEN } from '../../src/graphql/mutations.graphql';
+import { CREATE_POST_MODAL_OPEN } from '../../graphql/queries.graphql';
+import { TOGGLE_POST_MODAL_OPEN } from '../../graphql/mutations.graphql';
 import { adopt } from 'react-adopt';
 
 const styles = theme => ({

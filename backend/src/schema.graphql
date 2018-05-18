@@ -8,8 +8,8 @@ type Query {
 }
 
 type Mutation {
-  signup(email: String!, password: String!, name: String!): AuthPayload!
-  login(email: String!, password: String!): AuthPayload!
+  # signup(email: String!, password: String!, name: String!): AuthPayload! uncomment if you want multople users to be able to sign up
+  signin(email: String!, password: String!): AuthPayload!
   createDraft(title: String!, text: String!): Post!
   publish(id: ID!): Post!
   deletePost(id: ID!): Post!

@@ -1,18 +1,41 @@
-const { GraphQLServer } = require('graphql-yoga')
-const { Prisma } = require('prisma-binding')
-const resolvers = require('./resolvers')
+/* eslint-disable */
+require("dotenv").config({ path: "variables.env" });
+/* eslint-enable */
+const jwt = require("jsonwebtoken");
+const createServer = require("./createServer");
 
-const db = new Prisma({
-  typeDefs: 'src/generated/prisma.graphql', // the auto-generated GraphQL schema of the Prisma API
-  endpoint: process.env.PRISMA_ENDPOINT, // the endpoint of the Prisma API (value set in `.env`)
-  debug: true, // log all GraphQL queries & mutations sent to the Prisma API
-  // secret: process.env.PRISMA_SECRET, // only needed if specified in `database/prisma.yml` (value set in `.env`)
-})
+const server = createServer();
 
-const server = new GraphQLServer({
-  typeDefs: './src/schema.graphql',
-  resolvers,
-  context: req => ({ ...req, db }),
-})
+server.express.use((req, res, next) => {
+  const Authorization = req.get("Authorization");
+  console.log({ Authorization });
+  if (Authorization) {
+    const token = Authorization.replace("Bearer ", "");
+    const { userId } = jwt.verify(token, process.env.APP_SECRET);
+    req.userId = userId;
+  }
+  next();
+});
 
-server.start(() => console.log('Server is running on http://localhost:4000'))
+// 2. Get User from their ID
+server.express.use(async (req, res, next) => {
+  if (!req.userId) return next();
+  const user = await server
+    .context()
+    .db.query.user({ where: { id: req.userId } }, `{ id, email, name }`);
+  req.user = user;
+  next();
+});
+
+server.start(
+  {
+    cors: {
+      credentials: true,
+      origin: process.env.FRONTEND_URL
+    },
+    port: 4444
+  },
+  deets => {
+    console.log(`Server is running on http://localhost:${deets.port}`);
+  }
+);

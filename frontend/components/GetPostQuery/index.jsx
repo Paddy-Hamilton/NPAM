@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Query } from 'react-apollo';
-import { ALL_POST_QUERY } from '../../src/graphql/queries.graphql';
+import { ALL_POST_QUERY } from '../../graphql/queries.graphql';
 import InfiniteScroll from 'react-infinite-scroller';
 
 class GetPostQuery extends Component {
@@ -60,7 +60,6 @@ class GetPostQuery extends Component {
         }) => {
           if (loading) <p>Loading...</p>;
           if (error) return `Error! ${error.message}`;
-          console.log({ posts, count });
           console.log('posts.length', posts.length);
           return (
             <InfiniteScroll

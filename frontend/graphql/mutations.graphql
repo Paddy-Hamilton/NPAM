@@ -1,0 +1,16 @@
+mutation TOGGLE_POST_MODAL_OPEN {
+  toggleCreatePostModal @client
+}
+
+
+mutation SIGNIN($email: String!, $password: String!) {
+  signin(email: $email, password: $password){
+    id
+    email
+    name
+  }
+}
+
+mutation SIGNOUT {
+  signout @client
+}

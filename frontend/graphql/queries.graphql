@@ -20,8 +20,16 @@ query ALL_POST_QUERY($skip: Int = 0, $first: Int = 4) {
       count
     }
   },
-  posts(orderBy: createdAt_DESC, first: $first, skip: $skip) {
+  posts(orderBy: createdAt_DESC, first: $first, skip: $skip) @connection(key:"posts") {
     ...postDetails
+  }
+}
+
+query CURRENT_USER {
+  me {
+    id
+    email
+    name
   }
 }
 

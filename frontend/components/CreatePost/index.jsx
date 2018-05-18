@@ -5,7 +5,7 @@ import Button from '@material-ui/core/Button';
 import AddIcon from '@material-ui/icons/Add';
 import Icon from '@material-ui/core/Icon';
 import { Mutation } from 'react-apollo';
-import { TOGGLE_POST_MODAL_OPEN } from '../../src/graphql/mutations.graphql';
+import { TOGGLE_POST_MODAL_OPEN } from '../../graphql/mutations.graphql';
 const styles = theme => ({
   btn: {
     position: 'fixed',

@@ -2,7 +2,7 @@ import App, { Container } from 'next/app';
 import { ApolloProvider } from 'react-apollo';
 import withData from '../lib/withData';
 import PageLayout from '../components/PageLayout';
-import getPageContext from '../src/getPageContext';
+import getPageContext from '../lib/getPageContext';
 import { MuiThemeProvider } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 // Next.js wraps each Page in an <App></App> component. This is handy for when you want to persist anything from page to page, or just access a component that is 1 level higher than each page.

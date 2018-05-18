@@ -1,8 +1,0 @@
- query getAllPosts($first:Int!,$skip: Int!) {
-  allPosts(first:$first,skip:$skip)  @connection(key:"posts") {
-    title
-    id
-    createdAt 
-    url
-  }
-}
