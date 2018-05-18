@@ -62,30 +62,26 @@ function incrimentTimeout() {
 
 class ArticleGrid extends Component {
   shouldComponentUpdate(nextProps, nextState) {
-    return nextProps.allPosts.length !== this.props.allPosts.length;
+    return nextProps.posts.length !== this.props.posts.length;
   }
   formatDateTime = dt => {
     return moment(dt).format('l');
   };
   render() {
-    const { allPosts, classes } = this.props;
+    const { posts, classes } = this.props;
     const timeout = 100;
 
     return (
       <div className={classes.root}>
         <Grid container spacing={24} className={classes.grid} alignItems="stretch">
-          {allPosts &&
-            allPosts.map((post, i) => (
+          {posts &&
+            posts.map((post, i) => (
               <Grow in timeout={incrimentTimeout()} key={post.id || post.title}>
-                <Grid item xs={12} md={6} lg={4} onClick={() => (window.location = post.url)}>
+                <Grid item xs={12} md={6} lg={4}>
                   <Card className={classes.post}>
                     <CardContent>
                       <div>
-                        <h3>
-                          <a className={classes.link} href={post.url}>
-                            {post.title}
-                          </a>
-                        </h3>
+                        <h3>{post.title}</h3>
                         <p className={classes.date}>
                           <small>{moment(post.createdAt).format('MMMM Do YYYY')}</small>
                         </p>
@@ -95,7 +91,7 @@ class ArticleGrid extends Component {
                 </Grid>
               </Grow>
             ))}
-          {allPosts.length === 0 && (
+          {posts.length === 0 && (
             <Grid item xs={12}>
               <p>No items do display</p>
             </Grid>
@@ -107,7 +103,7 @@ class ArticleGrid extends Component {
 }
 
 ArticleGrid.propTypes = {
-  allPosts: PropTypes.array.isRequired
+  posts: PropTypes.array.isRequired
 };
 
 export default withStyles(styles)(ArticleGrid);

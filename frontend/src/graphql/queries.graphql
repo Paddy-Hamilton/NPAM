@@ -1,0 +1,32 @@
+fragment postDetails on Post {
+  __typename
+  id
+  createdAt
+  updatedAt
+  isPublished
+  title
+  img
+  text
+  author {
+    id 
+    name
+  }
+}
+
+
+query ALL_POST_QUERY($skip: Int = 0, $first: Int = 4) {
+  postsConnection(orderBy: createdAt_DESC) {
+    aggregate {
+      count
+    }
+  },
+  posts(orderBy: createdAt_DESC, first: $first, skip: $skip) {
+    ...postDetails
+  }
+}
+
+
+# local
+query CREATE_POST_MODAL_OPEN {
+  createPostModalOpen @client
+}

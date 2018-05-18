@@ -11,7 +11,7 @@ class Index extends React.Component {
   render() {
     return (
       <PageLayout>
-        <GetPostQuery render={allPosts => <ArticleGrid allPosts={allPosts} />} />
+        <GetPostQuery render={posts => <ArticleGrid posts={posts} />} />
         <CreatePostBtn />
         <CreatePostModal />
       </PageLayout>
