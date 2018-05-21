@@ -27,6 +27,7 @@ class MyApp extends App {
       window.__CLIENTLOADED__ = true;
     }
     const jssStyles = document.querySelector('#jss-server-side');
+
     if (jssStyles && jssStyles.parentNode) {
       jssStyles.parentNode.removeChild(jssStyles);
     }

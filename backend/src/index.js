@@ -9,6 +9,7 @@ const server = createServer();
 server.express.use((req, res, next) => {
   const Authorization = req.get("Authorization");
   if (Authorization) {
+    console.log({ Authorization });
     const token = Authorization.replace("Bearer ", "");
     const { userId } = jwt.verify(token, process.env.APP_SECRET);
     req.userId = userId;

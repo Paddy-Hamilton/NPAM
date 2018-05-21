@@ -25,6 +25,11 @@ const Composed = adopt({
   toggle: <Mutation mutation={TOGGLE_POST_MODAL_OPEN}>{() => {}}</Mutation>
 });
 class CreatePostModal extends Component {
+  state = {
+    title: '',
+    text: '',
+    img: ''
+  };
   render() {
     const { classes } = this.props;
     return (

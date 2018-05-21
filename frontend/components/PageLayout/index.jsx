@@ -9,6 +9,7 @@ import { Query, Mutation } from 'react-apollo';
 import { adopt } from 'react-adopt';
 import { TOGGLE_SIGNIN_MODAL, SIGNOUT } from '../../graphql/mutations.graphql';
 import { CURRENT_USER } from '../../graphql/queries.graphql';
+import SignIn from '../SignIn';
 
 const styles = theme => ({
   root: {
@@ -44,15 +45,17 @@ class PageLayout extends React.Component {
           </Link>
           <Composed>
             {({ currentUser, signout, toggleSigninModal }) => {
-              console.log(currentUser.error, currentUser.data);
-
               return (
-                <Button className={classes.btn} onClick={() => (currentUser.data ? signout : toggleSigninModal)}>
-                  <a>{!currentUser.data || currentUser.error ? 'Sign in' : 'Sign out'}</a>
+                <Button
+                  className={classes.btn}
+                  onClick={() => (!currentUser.data.me ? toggleSigninModal() : signout())}
+                >
+                  <a>{!currentUser.data.me || currentUser.error ? 'Sign in' : 'Sign out'}</a>
                 </Button>
               );
             }}
           </Composed>
+          <SignIn />
         </Header>
         {children}
       </React.Fragment>

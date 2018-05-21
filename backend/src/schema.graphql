@@ -1,9 +1,10 @@
-# import Post from "./generated/prisma.graphql"
+# import Post,Query.posts,Mutation.createPost,Mutation.updatePost,Mutation.deletePost,Query.postsConnection from "./generated/prisma.graphql"
 
 type Query {
   feed: [Post!]!
   drafts: [Post!]!
   post(id: ID!): Post
+  postCount: Int!
   me: User
 }
 
@@ -12,7 +13,6 @@ type Mutation {
   signin(email: String!, password: String!): AuthPayload!
   createDraft(title: String!, text: String!): Post!
   publish(id: ID!): Post!
-  deletePost(id: ID!): Post!
 }
 
 type Subscription {

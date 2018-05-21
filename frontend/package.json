@@ -18,6 +18,7 @@
     "next": "^6.0.2",
     "next-apollo": "^1.0.13",
     "next-with-apollo": "^2.1.2",
+    "prisma-binding": "^2.0.0",
     "prop-types": "latest",
     "react": "^16.2.0",
     "react-adopt": "^0.6.0",
