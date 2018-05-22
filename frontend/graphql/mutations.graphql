@@ -2,19 +2,18 @@
 
 mutation SIGNIN($email: String!, $password: String!) {
   signin(email: $email, password: $password){
-    user {
-      email
-      name
-    }
-
-    token
+    email
+    name
   }
 }
 
-# local
 mutation SIGNOUT {
-  signout @client
+  signout {
+    message
+  }
 }
+# local
+
 
 mutation TOGGLE_POST_MODAL_OPEN {
   toggleCreatePostModal @client

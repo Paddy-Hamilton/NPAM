@@ -10,13 +10,18 @@ type Query {
 
 type Mutation {
   # signup(email: String!, password: String!, name: String!): AuthPayload! uncomment if you want multople users to be able to sign up
-  signin(email: String!, password: String!): AuthPayload!
+  signin(email: String!, password: String!): User!
   createDraft(title: String!, text: String!): Post!
   publish(id: ID!): Post!
+  signout: SuccessMessage
 }
 
 type Subscription {
   feedSubscription: PostSubscriptionPayload!
+}
+
+type SuccessMessage {
+  message: String
 }
 
 type AuthPayload {

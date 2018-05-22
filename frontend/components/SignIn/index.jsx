@@ -79,6 +79,7 @@ class SignIn extends Component {
                       .mutation()
                       .then(res => {
                         if (res.data) {
+                          console.log('local storage set');
                           localStorage.setItem('nmgqlUserId', res.data.signin.token);
                           toggle();
                         }

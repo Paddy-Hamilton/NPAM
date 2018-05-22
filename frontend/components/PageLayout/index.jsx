@@ -22,7 +22,11 @@ const styles = theme => ({
 });
 
 const Composed = adopt({
-  currentUser: <Query query={CURRENT_USER}>{() => {}}</Query>,
+  currentUser: (
+    <Query query={CURRENT_USER} ssr={false}>
+      {() => {}}
+    </Query>
+  ),
   toggleSigninModal: <Mutation mutation={TOGGLE_SIGNIN_MODAL}>{() => {}}</Mutation>,
   signout: <Mutation mutation={SIGNOUT}>{() => {}}</Mutation>
 });

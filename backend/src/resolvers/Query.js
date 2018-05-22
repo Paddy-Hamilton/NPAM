@@ -27,8 +27,6 @@ const Query = {
   },
 
   me(parent, args, { db, request }, info) {
-    console.log("ME", { request });
-    console.log("request.userId", request.userId);
     const { userId } = request;
     if (!userId) {
       return null;

@@ -12,22 +12,11 @@ function createClient({ headers }) {
     connectToDevTools: true,
     ssrMode: !process.browser, // Disables forceFetch on the server (so queries are only run once)
     request: async operation => {
-      let headersWithAuth = { ...headers };
-      console.log('isBrowser()', isBrowser());
-      if (isBrowser()) {
-        const token = localStorage.getItem('nmgqlUserId');
-        console.log({ token });
-        if (token) {
-          headersWithAuth.Authorization = `Bearer ${token}`;
-          console.log('headersWithAuth.Authorization', headersWithAuth.Authorization);
-        }
-      }
-      console.log({ headersWithAuth });
       operation.setContext({
         fetchOptions: {
           credentials: 'include'
         },
-        headers: { ...headersWithAuth }
+        headers
       });
     },
     clientState: {
@@ -44,12 +33,6 @@ function createClient({ headers }) {
             const data = { data: { signinModalOpen: !signinModalOpen } };
             cache.writeData(data);
             return data;
-          },
-          signout(_, vars, ctx) {
-            if (isBrowser() && localStorage.getItem('nmgqlUserId')) {
-              localStorage.removeItem('nmgqlUserId');
-            }
-            return;
           }
         }
       },

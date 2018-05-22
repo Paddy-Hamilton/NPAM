@@ -25,11 +25,17 @@ const auth = {
     if (!valid) {
       throw new Error("Invalid password");
     }
-
-    return {
-      token: jwt.sign({ userId: user.id }, process.env.APP_SECRET),
-      user
-    };
+    const token = jwt.sign({ userId: user.id }, process.env.APP_SECRET);
+    ctx.response.cookie("token", token, {
+      maxAge: 1000 * 60 * 60 * 24 * 365,
+      httpOnly: true
+    });
+    return user;
+  },
+  async signout(parent, args, ctx, info) {
+    console.log("SIGNing OUT");
+    ctx.response.clearCookie("token");
+    return { message: "goodbye!" };
   }
 };
 
