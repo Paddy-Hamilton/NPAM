@@ -1,15 +1,18 @@
 const { getUserId } = require("../../utils");
-
+var sanitizeHtml = require("sanitize-html");
 const post = {
-  async createDraft(parent, { title, text }, ctx, info) {
-    if (!ctx.request.userId) {
+  async createDraft(parent, { title, text, img }, ctx, info) {
+    const { userId } = ctx.request;
+    console.log({ userId });
+    if (!userId) {
       throw new Error("You must be logged in to create a draft");
     }
     return ctx.db.mutation.createPost(
       {
         data: {
-          title,
-          text,
+          title: sanitizeHtml(title),
+          text: sanitizeHtml(text),
+          img: sanitizeHtml(img) || process.env.RANDOM_IMAGE,
           isPublished: false,
           author: {
             connect: { id: userId }

@@ -4,7 +4,7 @@ type Post {
   updatedAt: DateTime!
   isPublished: Boolean! @default(value: "false")
   title: String!
-  img: String!
+  img: String
   text: String!
   author: User!
 }

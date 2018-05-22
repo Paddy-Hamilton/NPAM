@@ -1,9 +1,26 @@
-
+# import "./fragments.graphql"
 
 mutation SIGNIN($email: String!, $password: String!) {
   signin(email: $email, password: $password){
     email
     name
+  }
+}
+
+mutation CREATE_POST ($title: String!, $text: String!,$img: String) {
+  createDraft (title:$title,text:$text,img:$img) {
+    __typename
+    id
+    createdAt
+    updatedAt
+    isPublished
+    title
+    img
+    text
+    author {
+      id 
+      name
+    }
   }
 }
 
@@ -13,8 +30,6 @@ mutation SIGNOUT {
   }
 }
 # local
-
-
 mutation TOGGLE_POST_MODAL_OPEN {
   toggleCreatePostModal @client
 }

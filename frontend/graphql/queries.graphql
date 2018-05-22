@@ -14,13 +14,13 @@ fragment postDetails on Post {
 }
 
 
-query POSTS($skip: Int = 0, $first: Int = 20,$userId:ID) {
+query POSTS($skip: Int = 0, $first: Int = 20) {
   postsConnection(orderBy: createdAt_DESC) {
     aggregate {
       count
     }
   }
-  posts(orderBy: createdAt_DESC,skip:$skip,first:$first,where:{author:{id:$userId}}){
+  posts(orderBy: createdAt_DESC,skip:$skip,first:$first){
     ...postDetails
   }
 }

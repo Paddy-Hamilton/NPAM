@@ -17,11 +17,7 @@ const styles = theme => ({
   },
   textField: {
     marginLeft: theme.spacing.unit,
-    marginRight: theme.spacing.unit,
-    width: 200
-  },
-  menu: {
-    width: 200
+    marginRight: theme.spacing.unit
   },
   paper: {
     position: 'absolute',
@@ -79,8 +75,6 @@ class SignIn extends Component {
                       .mutation()
                       .then(res => {
                         if (res.data) {
-                          console.log('local storage set');
-                          localStorage.setItem('nmgqlUserId', res.data.signin.token);
                           toggle();
                         }
                       })
@@ -97,6 +91,7 @@ class SignIn extends Component {
                     onChange={this.handleChange('email')}
                     margin="normal"
                     required
+                    fullWidth
                   />
                   <TextField
                     required

@@ -1,5 +1,5 @@
 # source: https://eu1.prisma.sh/paddy-hamilton-edb868/backend/dev
-# timestamp: Sat May 19 2018 12:32:16 GMT+0100 (BST)
+# timestamp: Tue May 22 2018 22:07:11 GMT+0100 (BST)
 
 type AggregatePost {
   count: Int!
@@ -94,7 +94,7 @@ type Post implements Node {
   updatedAt: DateTime!
   isPublished: Boolean!
   title: String!
-  img: String!
+  img: String
   text: String!
   author(where: UserWhereInput): User!
 }
@@ -118,7 +118,7 @@ type PostConnection {
 input PostCreateInput {
   isPublished: Boolean
   title: String!
-  img: String!
+  img: String
   text: String!
   author: UserCreateOneWithoutPostsInput!
 }
@@ -131,7 +131,7 @@ input PostCreateManyWithoutAuthorInput {
 input PostCreateWithoutAuthorInput {
   isPublished: Boolean
   title: String!
-  img: String!
+  img: String
   text: String!
 }
 
@@ -173,7 +173,7 @@ type PostPreviousValues {
   updatedAt: DateTime!
   isPublished: Boolean!
   title: String!
-  img: String!
+  img: String
   text: String!
 }
 
