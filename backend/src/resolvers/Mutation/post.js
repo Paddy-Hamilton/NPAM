@@ -3,7 +3,6 @@ var sanitizeHtml = require("sanitize-html");
 const post = {
   async createDraft(parent, { title, text, img }, ctx, info) {
     const { userId } = ctx.request;
-    console.log({ userId });
     if (!userId) {
       throw new Error("You must be logged in to create a draft");
     }

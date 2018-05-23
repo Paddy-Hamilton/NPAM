@@ -15,7 +15,6 @@ const auth = {
   // },
 
   async signin(parent, { email, password }, ctx, info) {
-    console.log({ email, password });
     const user = await ctx.db.query.user({ where: { email } });
     if (!user) {
       throw new Error(`No such user found for email: ${email}`);
@@ -33,7 +32,6 @@ const auth = {
     return user;
   },
   async signout(parent, args, ctx, info) {
-    console.log("SIGNing OUT");
     ctx.response.clearCookie("token");
     return { message: "goodbye!" };
   }
