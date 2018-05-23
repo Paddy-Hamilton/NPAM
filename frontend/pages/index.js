@@ -10,7 +10,7 @@ class Index extends React.Component {
   render() {
     return (
       <PageLayout>
-        <GetPostQuery render={posts => <ArticleGrid posts={posts} />} />
+        <GetPostQuery render={(posts, currentUser) => <ArticleGrid posts={posts} currentUser={currentUser} />} />
         <Query query={CURRENT_USER}>
           {({ loading, error, data: { me } }) => {
             if (loading || !me) return null;

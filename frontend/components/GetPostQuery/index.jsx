@@ -1,9 +1,26 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Query } from 'react-apollo';
-import { POSTS } from '../../graphql/queries.graphql';
+import { POSTS, CURRENT_USER } from '../../graphql/queries.graphql';
 import InfiniteScroll from 'react-infinite-scroller';
+import { adopt } from 'react-adopt';
 
+const Composed = adopt({
+  posts: (
+    <Query
+      query={POSTS}
+      variables={{
+        first: 20,
+        skip: 0
+      }}
+      fetchPolicy="cache-and-network"
+      notifyOnNetworkStatusChange={true}
+    >
+      {() => {}}
+    </Query>
+  ),
+  currentUser: <Query query={CURRENT_USER}>{() => {}}</Query>
+});
 class GetPostQuery extends Component {
   constructor(props) {
     super(props);
@@ -37,26 +54,23 @@ class GetPostQuery extends Component {
 
   render() {
     return (
-      <Query
-        query={POSTS}
-        variables={{
-          first: 20,
-          skip: 0
-        }}
-        fetchPolicy="cache-and-network"
-        notifyOnNetworkStatusChange={true}
-      >
+      <Composed>
         {({
-          loading,
-          error,
-          networkStatus,
-          data: {
-            posts,
-            postsConnection: {
-              aggregate: { count }
-            }
+          posts: {
+            loading,
+            error,
+            networkStatus,
+            data: {
+              posts,
+              postsConnection: {
+                aggregate: { count }
+              }
+            },
+            fetchMore
           },
-          fetchMore
+          currentUser: {
+            data: { me }
+          }
         }) => {
           if (loading) <p>Loading...</p>;
           if (error) return `Error! ${error.message}`;
@@ -71,11 +85,11 @@ class GetPostQuery extends Component {
                 </div>
               }
             >
-              {this.props.render(posts)}
+              {this.props.render(posts, me)}
             </InfiniteScroll>
           );
         }}
-      </Query>
+      </Composed>
     );
   }
 }
