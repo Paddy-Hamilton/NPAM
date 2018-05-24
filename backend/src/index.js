@@ -4,7 +4,7 @@ require("dotenv").config({ path: "variables.env" });
 const jwt = require("jsonwebtoken");
 const createServer = require("./createServer");
 const cookieParser = require("cookie-parser");
-
+const db = require("./db");
 const server = createServer();
 server.express.use(cookieParser());
 
@@ -20,9 +20,10 @@ server.express.use((req, res, next) => {
 // 2. Get User from their ID
 server.express.use(async (req, res, next) => {
   if (!req.userId) return next();
-  const user = await server
-    .context()
-    .db.query.user({ where: { id: req.userId } }, `{ id, email, name }`);
+  const user = await db.query.user(
+    { where: { id: req.userId } },
+    `{ id, email, name }`
+  );
   req.user = user;
   next();
 });

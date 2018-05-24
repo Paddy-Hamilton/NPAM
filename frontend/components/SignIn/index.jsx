@@ -9,7 +9,6 @@ import { SIGNIN_MODAL_OPEN, CURRENT_USER } from '../../graphql/queries.graphql';
 import { Mutation, Query } from 'react-apollo';
 import { adopt } from 'react-adopt';
 
-console.log({ CURRENT_USER });
 const styles = theme => ({
   container: {
     display: 'flex',
