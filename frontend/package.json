@@ -28,9 +28,9 @@
     "react-jss": "latest"
   },
   "scripts": {
-    "dev": "rimraf node_modules/.cache && next",
+    "dev": "rimraf node_modules/.cache && next -p 8080",
     "build": "rimraf node_modules/.cache && next build",
-    "start": "rimraf node_modules/.cache && next start"
+    "start": "rimraf node_modules/.cache && next start "
   },
   "devDependencies": {
     "babel-loader": "^7.1.4",

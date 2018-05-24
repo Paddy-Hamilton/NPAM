@@ -10,8 +10,9 @@ server.express.use(cookieParser());
 
 server.express.use((req, res, next) => {
   const { token } = req.cookies;
-  if (token) {
-    const { userId } = jwt.verify(token, process.env.APP_SECRET);
+  const tokenHeader = req.headers.token;
+  if (token || tokenHeader) {
+    const { userId } = jwt.verify(token || tokenHeader, process.env.APP_SECRET);
     req.userId = userId;
   }
   next();
@@ -32,11 +33,11 @@ server.start(
   {
     cors: {
       credentials: true,
-      origin: "http://localhost:3000"
+      origin: "http://localhost:8080"
     },
-    port: 4444
+    port: 4000
   },
-  deets => {
-    console.log(`Server is running on http://localhost:${deets.port}`);
+  details => {
+    console.log(`Server is running on http://localhost:${details.port}`);
   }
 );

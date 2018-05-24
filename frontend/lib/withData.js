@@ -7,7 +7,7 @@ function createClient({ headers }) {
   return new ApolloClient({
     uri:
       process.env.NODE_ENV === 'development'
-        ? 'http://localhost:4444'
+        ? 'http://localhost:4000'
         : 'https://eu1.prisma.sh/paddy-hamilton-edb868/backend/dev',
     connectToDevTools: true, // Disables forceFetch on the server (so queries are only run once)
     request: async operation => {
