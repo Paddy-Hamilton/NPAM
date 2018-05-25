@@ -14,10 +14,6 @@ const styles = theme => ({
     display: 'flex',
     flexWrap: 'wrap'
   },
-  textField: {
-    marginLeft: theme.spacing.unit,
-    marginRight: theme.spacing.unit
-  },
   paper: {
     position: 'absolute',
     width: theme.spacing.unit * 50,
@@ -27,6 +23,10 @@ const styles = theme => ({
     top: `50%`,
     left: `50%`,
     transform: `translate(-50%, -50%)`
+  },
+  submit: {
+    float: 'right',
+    marginTop: theme.spacing.unit * 3
   }
 });
 
@@ -85,7 +85,6 @@ class SignIn extends Component {
                   <TextField
                     id="email"
                     label="Email"
-                    className={classes.textField}
                     value={email}
                     onChange={this.handleChange('email')}
                     margin="normal"
@@ -96,12 +95,13 @@ class SignIn extends Component {
                     required
                     label="Password"
                     type="password"
+                    fullWidth
                     margin="normal"
                     value={password}
                     onChange={this.handleChange('password')}
                   />
-                  <Button variant="raised" type="submit" color="primary">
-                    Submit
+                  <Button variant="raised" type="submit" color="primary" className={classes.submit}>
+                    Login
                   </Button>
                 </form>
               </div>

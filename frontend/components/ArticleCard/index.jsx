@@ -17,13 +17,10 @@ const styles = theme => ({
     position: 'relative',
     cursor: 'pointer',
     height: '100%',
-    transition: 'background 0.3s ease-in-out',
     '&:hover,&:focus': {
-      background: theme.palette.secondary.xlight,
-      transition: 'background 0.3s ease-in-out',
-      '& $link,& $date': {
-        // color: 'white',
-        // transition: 'color 0.3s ease-in-out'
+      '& $media': {
+        mixBlendMode: 'screen',
+        filter: 'grayscale(1) contrast(1.5)'
       }
     }
   },
@@ -34,10 +31,13 @@ const styles = theme => ({
   },
   media: {
     height: 0,
-    paddingTop: '56.25%' // 16:9
+    paddingTop: '56.25%'
+  },
+  mediaContainer: {
+    background: `linear-gradient(45deg, ${theme.palette.primary.dark} 30%, ${theme.palette.secondary.light} 90%)`
   },
   date: {
-    color: theme.palette.primary.light,
+    color: theme.palette.primary,
     transition: 'color 0.3s ease-in-out'
   },
   postTextContainer: {
@@ -73,13 +73,16 @@ class ArticleCard extends Component {
 
     return (
       <Card className={classes.post}>
-        <CardMedia className={classes.media} image={img} title="Post image">
-          {currentUser && (
-            <CardActions className={classes.actionsRoot}>
-              <EditPostAction id={id} theme={theme} />
-            </CardActions>
-          )}
-        </CardMedia>
+        <div className={classes.mediaContainer}>
+          <CardMedia className={classes.media} image={img} title="Post image">
+            {currentUser && (
+              <CardActions className={classes.actionsRoot}>
+                <EditPostAction id={id} theme={theme} />
+              </CardActions>
+            )}
+          </CardMedia>
+        </div>
+
         <CardContent>
           <Typography gutterBottom variant="headline" component="h2">
             {title}
