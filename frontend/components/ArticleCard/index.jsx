@@ -72,32 +72,34 @@ class ArticleCard extends Component {
     } = this.props;
 
     return (
-      <Card className={classes.post}>
-        <div className={classes.mediaContainer}>
-          <CardMedia className={classes.media} image={img} title="Post image">
-            {currentUser && (
-              <CardActions className={classes.actionsRoot}>
-                <EditPostAction id={id} theme={theme} />
-              </CardActions>
-            )}
-          </CardMedia>
-        </div>
-
-        <CardContent>
-          <Typography gutterBottom variant="headline" component="h2">
-            {title}
-          </Typography>
-          <Typography component="p" gutterBottom>
-            {text}
-          </Typography>
-          <div className={classes.context}>
-            <Typography>{author.name}</Typography>
-            <Typography variant="caption">
-              <small>{moment(createdAt).format('MMMM Do YYYY')}</small>
-            </Typography>
+      <Link as={`/a/${id}`} href={`/article?id=${id}`}>
+        <Card className={classes.post}>
+          <div className={classes.mediaContainer}>
+            <CardMedia className={classes.media} image={img} title="Post image">
+              {currentUser && (
+                <CardActions className={classes.actionsRoot}>
+                  <EditPostAction id={id} theme={theme} />
+                </CardActions>
+              )}
+            </CardMedia>
           </div>
-        </CardContent>
-      </Card>
+
+          <CardContent>
+            <Typography gutterBottom variant="headline" component="h2">
+              {title}
+            </Typography>
+            <Typography component="p" gutterBottom>
+              {text}
+            </Typography>
+            <div className={classes.context}>
+              <Typography>{author.name}</Typography>
+              <Typography variant="caption">
+                <small>{moment(createdAt).format('MMMM Do YYYY')}</small>
+              </Typography>
+            </div>
+          </CardContent>
+        </Card>
+      </Link>
     );
   }
 }
