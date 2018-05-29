@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import EditIcon from '@material-ui/icons/Edit';
 import Zoom from '@material-ui/core/Zoom';
+import { TOGGLE_POST_MODAL_OPEN } from '../../graphql/mutations.graphql';
+import { Mutation } from 'react-apollo';
 class EditPostAction extends Component {
   render() {
-    const { theme } = this.props;
+    const { theme, postId } = this.props;
     const transitionDuration = {
       enter: theme.transitions.duration.enteringScreen,
       exit: theme.transitions.duration.leavingScreen
@@ -20,16 +21,29 @@ class EditPostAction extends Component {
         }}
         unmountOnExit
       >
-        <Button aria-label="Edit Post" color="secondary" variant="fab" mini>
-          <EditIcon />
-        </Button>
+        <Mutation mutation={TOGGLE_POST_MODAL_OPEN}>
+          {toggleEditPostModal => (
+              <Button
+                aria-label="Edit Post"
+                color="secondary"
+                variant="fab"
+                mini
+                onClick={e => {
+                  e.preventDefault();
+                  toggleEditPostModal();
+                }}
+              >
+                <EditIcon />
+              </Button>
+            )
+          }
+        </Mutation>
       </Zoom>
     );
   }
 }
 
 EditPostAction.propTypes = {
-  id: PropTypes.string.isRequired,
   theme: PropTypes.object.isRequired
 };
 

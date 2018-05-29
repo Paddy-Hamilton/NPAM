@@ -20,6 +20,7 @@ const Query = {
     return ctx.db.query.posts({ where }, info);
   },
   post(parent, { id }, ctx, info) {
+    console.log("id", { id });
     return ctx.db.query.post({ where: { id } }, info);
   },
   posts(parent, args, ctx, info) {

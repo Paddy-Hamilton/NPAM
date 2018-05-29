@@ -1,6 +1,6 @@
 import withApollo from 'next-with-apollo';
 import ApolloClient from 'apollo-boost';
-import { CREATE_POST_MODAL_OPEN, SIGNIN_MODAL_OPEN } from '../graphql/queries.graphql';
+import { EDIT_POST_MODAL_OPEN, SIGNIN_MODAL_OPEN } from '../graphql/queries.graphql';
 // can also be a function that accepts a `headers` object (SSR only) and returns a config
 
 function createClient({ headers }) {
@@ -8,7 +8,7 @@ function createClient({ headers }) {
     uri:
       process.env.NODE_ENV === 'development'
         ? 'http://localhost:4000'
-        : 'https://eu1.prisma.sh/paddy-hamilton-edb868/backend/dev',
+        : 'https://eu1.prisma.sh/paddy-hamilton-edb868/nam-backend/dev',
     connectToDevTools: true, // Disables forceFetch on the server (so queries are only run once)
     request: async operation => {
       operation.setContext({
@@ -21,9 +21,9 @@ function createClient({ headers }) {
     clientState: {
       resolvers: {
         Mutation: {
-          toggleCreatePostModal(_, variables, { cache }) {
-            const { createPostModalOpen } = cache.readQuery({ query: CREATE_POST_MODAL_OPEN });
-            const data = { data: { createPostModalOpen: !createPostModalOpen } };
+          toggleEditPostModal(_, variables, { cache }) {
+            const { editPostModalOpen } = cache.readQuery({ query: EDIT_POST_MODAL_OPEN });
+            const data = { data: { editPostModalOpen: !editPostModalOpen } };
             cache.writeData(data);
             return data;
           },
@@ -36,7 +36,7 @@ function createClient({ headers }) {
         }
       },
       defaults: {
-        createPostModalOpen: false,
+        editPostModalOpen: false,
         signinModalOpen: false
       }
     }

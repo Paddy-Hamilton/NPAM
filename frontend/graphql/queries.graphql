@@ -24,6 +24,24 @@ query POSTS($skip: Int = 0, $first: Int = 20) {
     ...postDetails
   }
 }
+query POST($id:ID!) {
+  post(id:$id){
+    createdAt
+    updatedAt
+    isPublished
+    title
+    img
+    text
+    author {
+      posts {
+        title
+        img 
+        createdAt
+        text
+      }
+    } 
+  }
+}
 
 query CURRENT_USER {
   me {
@@ -35,8 +53,8 @@ query CURRENT_USER {
 
 
 # local
-query CREATE_POST_MODAL_OPEN {
-  createPostModalOpen @client
+query EDIT_POST_MODAL_OPEN {
+  editPostModalOpen @client
 }
 
 query SIGNIN_MODAL_OPEN {

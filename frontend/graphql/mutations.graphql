@@ -7,8 +7,8 @@ mutation SIGNIN($email: String!, $password: String!) {
   }
 }
 
-mutation CREATE_POST ($title: String!, $text: String!,$img: String) {
-  createDraft (title:$title,text:$text,img:$img) {
+mutation UPSERT_POST($where: PostWhereUniqueInput!$create: PostCreateInput!$update: PostUpdateInput!) {
+  editPost (where:$where,create:$create,update:$update) {
     __typename
     id
     createdAt
@@ -17,10 +17,19 @@ mutation CREATE_POST ($title: String!, $text: String!,$img: String) {
     title
     img
     text
-    author {
-      id 
-      name
-    }
+  }
+}
+
+mutation EDIT_POST($title:String!,$text:String!,$img:String,$postId:String) {
+  editPost (title:$title,text:$text,img:$img,postId:$postId) {
+    __typename
+    id
+    createdAt
+    updatedAt
+    isPublished
+    title
+    img
+    text
   }
 }
 
@@ -31,7 +40,7 @@ mutation SIGNOUT {
 }
 # local
 mutation TOGGLE_POST_MODAL_OPEN {
-  toggleCreatePostModal @client
+  toggleEditPostModal @client
 }
 
 mutation TOGGLE_SIGNIN_MODAL {

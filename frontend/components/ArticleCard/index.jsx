@@ -10,7 +10,6 @@ import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import Link from 'next/link';
 import moment from 'moment';
-import EditPostAction from '../EditPostActions';
 
 const styles = theme => ({
   post: {
@@ -51,11 +50,6 @@ const styles = theme => ({
   },
   context: {
     marginTop: theme.spacing.unit * 3
-  },
-  actionsRoot: {
-    position: 'absolute',
-    top: 0,
-    right: 0
   }
 });
 
@@ -75,13 +69,7 @@ class ArticleCard extends Component {
       <Link as={`/a/${id}`} href={`/article?id=${id}`}>
         <Card className={classes.post}>
           <div className={classes.mediaContainer}>
-            <CardMedia className={classes.media} image={img} title="Post image">
-              {currentUser && (
-                <CardActions className={classes.actionsRoot}>
-                  <EditPostAction id={id} theme={theme} />
-                </CardActions>
-              )}
-            </CardMedia>
+            <CardMedia className={classes.media} image={img} title="Post image" />
           </div>
 
           <CardContent>
@@ -92,7 +80,7 @@ class ArticleCard extends Component {
               {text}
             </Typography>
             <div className={classes.context}>
-              <Typography>{author.name}</Typography>
+              {/* <Typography>{author.name}</Typography> */}
               <Typography variant="caption">
                 <small>{moment(createdAt).format('MMMM Do YYYY')}</small>
               </Typography>

@@ -20,13 +20,13 @@ class CreatePostBtn extends Component {
     return (
       <React.Fragment>
         <Mutation mutation={TOGGLE_POST_MODAL_OPEN}>
-          {toggleCreatePostModal => (
+          {toggleEditPostModal => (
             <Button
               variant="fab"
               color="primary"
               aria-label="add"
               className={classes.btn}
-              onClick={toggleCreatePostModal}
+              onClick={toggleEditPostModal}
             >
               <AddIcon />
             </Button>

@@ -3,7 +3,7 @@ import PageLayout from '../components/PageLayout';
 import GetPostQuery from '../components/GetPostQuery';
 import ArticleGrid from '../components/ArticleGrid';
 import CreatePostBtn from '../components/CreatePost';
-import CreatePostModal from '../components/CreatePostModal';
+import EditPostModal from '../components/EditPostModal';
 import { CURRENT_USER } from '../graphql/queries.graphql';
 import { Query } from 'react-apollo';
 class Index extends React.Component {
@@ -18,7 +18,7 @@ class Index extends React.Component {
             return (
               <React.Fragment>
                 <CreatePostBtn />
-                <CreatePostModal />
+                <EditPostModal />
               </React.Fragment>
             );
           }}

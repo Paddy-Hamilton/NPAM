@@ -1,10 +1,9 @@
 import SingleArticle from '../components/SingleArticle';
 import PageLayout from '../components/PageLayout';
-const ArticlePage = props => {
-  console.log('article page', { props });
+const ArticlePage = ({ query: { id } }) => {
   return (
     <PageLayout>
-      <SingleArticle />
+      <SingleArticle id={id} />
     </PageLayout>
   );
 };
