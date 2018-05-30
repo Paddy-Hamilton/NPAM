@@ -28,7 +28,7 @@ const styles = theme => ({
   grid: {
     marginTop: 0
   },
-  articleBody: {
+  postBody: {
     marginTop: theme.spacing.unit * 4
   },
   toggle: {
@@ -48,7 +48,7 @@ const Composed = adopt({
   currentUser: <Query query={CURRENT_USER}>{() => {}}</Query>
 });
 
-class SingleArticle extends Component {
+class SinglePost extends Component {
   handleEditClick = e => {
     e.preventDefault();
   };
@@ -86,12 +86,12 @@ class SingleArticle extends Component {
                     <Typography variant="caption" gutterBottom>
                       {moment(createdAt).format('MMMM Do YYYY')}
                     </Typography>
-                    <Typography variant="body1" gutterBottom className={classes.articleBody}>
+                    <Typography variant="body1" gutterBottom className={classes.postBody}>
                       {text}
                     </Typography>
                   </Grid>
                 </Grid>
-                <EditPostModal articleId={id} title={title} text={text} img={img} />
+                <EditPostModal postId={id} title={title} text={text} img={img} />
               </div>
             </div>
           );
@@ -101,4 +101,4 @@ class SingleArticle extends Component {
   }
 }
 
-export default withStyles(styles, { withTheme: true })(SingleArticle);
+export default withStyles(styles, { withTheme: true })(SinglePost);

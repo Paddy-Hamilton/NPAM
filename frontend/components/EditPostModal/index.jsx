@@ -10,6 +10,7 @@ import { EDIT_POST_MODAL_OPEN, POSTS, CURRENT_USER, POST } from '../../graphql/q
 import { TOGGLE_POST_MODAL_OPEN, EDIT_POST } from '../../graphql/mutations.graphql';
 import { adopt } from 'react-adopt';
 import uuid from 'uuid/v4';
+import SnackBarNotification from '../SnackBarNotification';
 
 const styles = theme => ({
   paper: {
@@ -48,19 +49,36 @@ class EditPostModal extends Component {
     this.state = {
       title: title || '',
       text: text || '',
-      img: img || ''
+      img: img || '',
+      snackbar: {
+        message: '',
+        type: ''
+      }
     };
   }
   handleOnChange = name => e => {
     e.preventDefault();
     this.setState({ [name]: e.target.value });
   };
+  handleClearSnackbar = () => {
+    this.setState({
+      snackbar: {
+        message: '',
+        type: ''
+      }
+    });
+  };
 
   render() {
-    const { classes, articleId } = this.props;
-    const { title, text, img } = this.state;
+    const { classes, postId } = this.props;
+    const {
+      title,
+      text,
+      img,
+      snackbar: { message, type }
+    } = this.state;
     return (
-      <Composed title={title} text={text} img={img} postId={articleId || ''}>
+      <Composed title={title} text={text} img={img} postId={postId || ''}>
         {({
           isOpen,
           toggle,
@@ -72,65 +90,80 @@ class EditPostModal extends Component {
           if (isOpen.loading || toggle.loading) console.log('loading', { isOpen, toggle });
           if (isOpen.error || toggle.error) console.error({ isOpen, toggle });
           return (
-            <Modal
-              aria-labelledby={`${articleId ? 'Edit' : 'Create'} post`}
-              aria-describedby={`${articleId ? 'Edit' : 'Create and publish'} a post`}
-              open={isOpen.data.editPostModalOpen}
-              onClose={toggle}
-            >
-              <div className={classes.paper}>
-                <Typography variant="headline" gutterBottom>
-                  {`${articleId ? 'Edit' : 'Create'} post`}
-                </Typography>
-                <form
-                  onSubmit={e => {
-                    e.preventDefault();
-                    return editPost
-                      .mutation()
-                      .then(res => {
-                        if (res.data) {
-                          toggle();
-                        }
-                      })
-                      .catch(err => {
-                        console.error(err);
-                      });
-                  }}
-                >
-                  <TextField
-                    id="new-post-title"
-                    label="Title"
-                    margin="normal"
-                    required
-                    fullWidth
-                    value={title}
-                    onChange={this.handleOnChange('title')}
-                  />
-                  <TextField
-                    id="new-post-text"
-                    label="Text"
-                    margin="normal"
-                    required
-                    fullWidth
-                    value={text}
-                    multiline
-                    rowsMax="10"
-                    onChange={this.handleOnChange('text')}
-                  />
-                  <TextField
-                    id="new-post-img-url"
-                    label="Image Url"
-                    margin="normal"
-                    fullWidth
-                    value={img}
-                    onChange={this.handleOnChange('img')}
-                  />
-                  <Button variant="raised" type="submit" color="primary" className={classes.submit}>
-                    Save
-                  </Button>
-                </form>
-              </div>
-            </Modal>
+            <>
+              <Modal
+                aria-labelledby={`${postId ? 'Edit' : 'Create'} post`}
+                aria-describedby={`${postId ? 'Edit' : 'Create and publish'} a post`}
+                open={isOpen.data.editPostModalOpen}
+                onClose={toggle}
+              >
+                <div className={classes.paper}>
+                  <Typography variant="headline" gutterBottom>
+                    {`${postId ? 'Edit' : 'Create'} post`}
+                  </Typography>
+                  <form
+                    onSubmit={e => {
+                      e.preventDefault();
+                      return editPost
+                        .mutation()
+                        .then(res => {
+                          if (res.data) {
+                            toggle();
+                            this.setState({
+                              snackbar: {
+                                message: 'Post Saved',
+                                type: 'success'
+                              }
+                            });
+                          }
+                        })
+                        .catch(err => {
+                          console.error(err);
+                          this.setState({
+                            snackbar: {
+                              message: `Error whilst trying to save post: ${err} `,
+                              type: 'warning'
+                            }
+                          });
+                        });
+                    }}
+                  >
+                    <TextField
+                      id="new-post-title"
+                      label="Title"
+                      margin="normal"
+                      required
+                      fullWidth
+                      value={title}
+                      onChange={this.handleOnChange('title')}
+                    />
+                    <TextField
+                      id="new-post-text"
+                      label="Text"
+                      margin="normal"
+                      required
+                      fullWidth
+                      value={text}
+                      multiline
+                      rowsMax="10"
+                      onChange={this.handleOnChange('text')}
+                    />
+                    <TextField
+                      id="new-post-img-url"
+                      label="Image Url"
+                      margin="normal"
+                      fullWidth
+                      value={img}
+                      onChange={this.handleOnChange('img')}
+                    />
+                    <Button variant="raised" type="submit" color="primary" className={classes.submit}>
+                      Save
+                    </Button>
+                  </form>
+                </div>
+              </Modal>
+              {message && <SnackBarNotification message={message} type={type} onClose={this.handleClearSnackbar} />}
+            </>
           );
         }}
       </Composed>
@@ -142,7 +175,7 @@ EditPostModal.propTypes = {
   title: PropTypes.string,
   text: PropTypes.string,
   img: PropTypes.string,
-  articleId: PropTypes.string
+  postId: PropTypes.string
 };
 
 export default withStyles(styles)(EditPostModal);

@@ -10,7 +10,7 @@ import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import Link from 'next/link';
 import moment from 'moment';
-
+import truncate from 'truncate';
 const styles = theme => ({
   post: {
     position: 'relative',
@@ -39,6 +39,15 @@ const styles = theme => ({
     color: theme.palette.primary,
     transition: 'color 0.3s ease-in-out'
   },
+  content: {
+    display: 'flex',
+    flexWrap: 'wrap',
+    alignContent: 'space-between',
+    height: '43.75%'
+  },
+  contentItem: {
+    flexBasis: '100%'
+  },
   postTextContainer: {
     textAlign: 'left',
     paddingTop: theme.spacing.unit * 20,
@@ -53,7 +62,7 @@ const styles = theme => ({
   }
 });
 
-class ArticleCard extends Component {
+class PostCard extends Component {
   formatDateTime = dt => {
     return moment(dt).format('l');
   };
@@ -66,21 +75,21 @@ class ArticleCard extends Component {
     } = this.props;
 
     return (
-      <Link as={`/a/${id}`} href={`/article?id=${id}`}>
+      <Link as={`/a/${id}`} href={`/post?id=${id}`}>
         <Card className={classes.post}>
           <div className={classes.mediaContainer}>
             <CardMedia className={classes.media} image={img} title="Post image" />
           </div>
 
-          <CardContent>
-            <Typography gutterBottom variant="headline" component="h2">
+          <CardContent className={classes.content}>
+            <Typography gutterBottom variant="headline" component="h2" className={classes.contentItem}>
               {title}
             </Typography>
-            <Typography component="p" gutterBottom>
-              {text}
+            <Typography component="p" gutterBottom className={classes.contentItem}>
+              {truncate(text, 90)}
             </Typography>
-            <div className={classes.context}>
-              {/* <Typography>{author.name}</Typography> */}
+            <div className={`${classes.context} ${classes.contentItem}`}>
+              <Typography>{author.name}</Typography>
               <Typography variant="caption">
                 <small>{moment(createdAt).format('MMMM Do YYYY')}</small>
               </Typography>
@@ -92,8 +101,8 @@ class ArticleCard extends Component {
   }
 }
 
-ArticleCard.propTypes = {
+PostCard.propTypes = {
   post: PropTypes.object.isRequired
 };
 
-export default withStyles(styles, { withTheme: true })(ArticleCard);
+export default withStyles(styles, { withTheme: true })(PostCard);

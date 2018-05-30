@@ -4,7 +4,7 @@ import Grid from '@material-ui/core/Grid';
 import { withStyles } from '@material-ui/core/styles';
 import Link from 'next/link';
 import Grow from '@material-ui/core/Grow';
-import ArticleCard from '../ArticleCard';
+import PostCard from '../PostCard';
 
 const styles = theme => ({
   root: {
@@ -25,7 +25,7 @@ function incrimentTimeout() {
   counter++;
   return timeout;
 }
-class ArticleGrid extends Component {
+class PostGrid extends Component {
   shouldComponentUpdate(nextProps, nextState) {
     return nextProps.posts.length !== this.props.posts.length || nextProps.currentUser !== this.props.currentUser;
   }
@@ -41,7 +41,7 @@ class ArticleGrid extends Component {
             posts.map((post, i) => (
               <Grow in timeout={incrimentTimeout()} key={post.id || post.title}>
                 <Grid item xs={12} md={6} lg={4}>
-                  <ArticleCard post={post} key={post.id} currentUser={currentUser} />
+                  <PostCard post={post} key={post.id} currentUser={currentUser} />
                 </Grid>
               </Grow>
             ))}
@@ -56,8 +56,8 @@ class ArticleGrid extends Component {
   }
 }
 
-ArticleGrid.propTypes = {
+PostGrid.propTypes = {
   posts: PropTypes.array.isRequired
 };
 
-export default withStyles(styles)(ArticleGrid);
+export default withStyles(styles)(PostGrid);

@@ -11,7 +11,7 @@ app
     const server = express();
 
     server.get('/a/:id', async (req, res) => {
-      const actualPage = '/article';
+      const actualPage = '/post';
       const queryParams = { id: req.params.id };
       app.render(req, res, actualPage, queryParams);
     });

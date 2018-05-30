@@ -21,7 +21,7 @@ const Composed = adopt({
   ),
   currentUser: <Query query={CURRENT_USER}>{() => {}}</Query>
 });
-class GetPostQuery extends Component {
+class GetPostsQuery extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -94,4 +94,4 @@ class GetPostQuery extends Component {
   }
 }
 
-export default GetPostQuery;
+export default GetPostsQuery;
