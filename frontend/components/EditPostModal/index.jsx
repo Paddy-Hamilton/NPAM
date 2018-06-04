@@ -87,16 +87,15 @@ class EditPostModal extends Component {
             <form
               onSubmit={e => {
                 e.preventDefault();
-                return editPost
-                  .mutation({
-                    variables: {
-                      title,
-                      postId,
-                      text,
-                      img
-                    },
-                    refetchQueries: [{ query: POSTS }, { query: POST, variables: { id: postId } }]
-                  })
+                return editPost({
+                  variables: {
+                    title,
+                    postId,
+                    text,
+                    img
+                  },
+                  refetchQueries: [{ query: POSTS }, { query: POST, variables: { id: postId } }]
+                })
                   .then(res => {
                     if (res.data) {
                       toggle();
