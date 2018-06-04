@@ -1,21 +1,7 @@
-# Next.js example
 
-## How to use
+# NPAM React Boilerplate, 
 
-Download the example [or clone the repo](https://github.com/mui-org/material-ui):
+SSR with Nextjs, Graphql with prisma backend and apollo cient, styled with Material-UI
 
-```bash
-curl https://codeload.github.com/mui-org/material-ui/tar.gz/v1-beta | tar -xz --strip=2  material-ui-1-beta/examples/nextjs
-cd nextjs
-```
+Inspired by https://codeload.github.com/mui-org/material-ui/tar.gz/v1-beta 
 
-Install it and run:
-
-```bash
-npm install
-npm run dev
-```
-
-## The idea behind the example
-
-[Next.js](https://github.com/zeit/next.js) is a framework for server-rendered React apps.
