@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
 import { Query } from 'react-apollo';
-import { POST, CURRENT_USER } from '../../graphql/queries.graphql';
-import { adopt } from 'react-adopt';
+
 import { withStyles } from '@material-ui/core/styles';
 import { Grid, Typography } from '@material-ui/core';
 import moment from 'moment';
 import EditPostAction from '../EditPostActions';
 import EditPostModal from '../EditPostModal';
+import { SinglePostContainer } from './Container';
+
 const styles = theme => ({
   root: {
     margin: '0 auto'
@@ -39,66 +40,60 @@ const styles = theme => ({
   }
 });
 
-const Composed = adopt({
-  post: ({ id, render }) => (
-    <Query query={POST} variables={{ id }}>
-      {post => render(post)}
-    </Query>
-  ),
-  currentUser: <Query query={CURRENT_USER}>{() => {}}</Query>
-});
-
 class SinglePost extends Component {
   handleEditClick = e => {
     e.preventDefault();
   };
   render() {
-    const { id, classes, theme } = this.props;
+    const {
+      id,
+      classes,
+      theme,
+      post: {
+        data: {
+          post: { img, title, createdAt, text }
+        },
+        loading,
+        errer
+      },
+      currentUser: {
+        data: { me }
+      }
+    } = this.props;
+    if (loading) return <p>Loading...</p>;
     return (
-      <Composed id={id}>
-        {({
-          post: {
-            data: {
-              post: { img, title, createdAt, text }
-            },
-            loading,
-            errer
-          },
-          currentUser: {
-            data: { me }
-          }
-        }) => {
-          if (loading) return <p>loading</p>;
-          return (
-            <div className={classes.root}>
-              <header style={{ backgroundImage: `url(${img})` }} className={classes.header} />
-              <div className={classes.gridWrapper}>
-                <Grid container spacing={16}>
-                  <Grid item xs={12}>
-                    {me && (
-                      <span className={classes.toggle}>
-                        <EditPostAction theme={theme} />
-                      </span>
-                    )}
-                    <Typography variant="display1" gutterBottom>
-                      {title}
-                    </Typography>
-                    <Typography variant="caption" gutterBottom>
-                      {moment(createdAt).format('MMMM Do YYYY')}
-                    </Typography>
-                    <Typography variant="body1" gutterBottom className={classes.postBody}>
-                      {text}
-                    </Typography>
-                  </Grid>
-                </Grid>
-                <EditPostModal postId={id} title={title} text={text} img={img} />
-              </div>
-            </div>
-          );
-        }}
-      </Composed>
+      <div className={classes.root}>
+        <header style={{ backgroundImage: `url(${img})` }} className={classes.header} />
+        <div className={classes.gridWrapper}>
+          <Grid container spacing={16}>
+            <Grid item xs={12}>
+              {me && (
+                <span className={classes.toggle}>
+                  <EditPostAction theme={theme} />
+                </span>
+              )}
+              <Typography variant="display1" gutterBottom>
+                {title}
+              </Typography>
+              <Typography variant="caption" gutterBottom>
+                {moment(createdAt).format('MMMM Do YYYY')}
+              </Typography>
+              <Typography variant="body1" gutterBottom className={classes.postBody}>
+                {text}
+              </Typography>
+            </Grid>
+          </Grid>
+          <EditPostModal postId={id} title={title} text={text} img={img} />
+        </div>
+      </div>
     );
   }
 }
 
-export default withStyles(styles, { withTheme: true })(SinglePost);
+export const SinglePostStyled = withStyles(styles, { withTheme: true })(SinglePost);
+
+export default ({ id }) => (
+  <SinglePostContainer id={id}>
+    {({ post, currentUser }) => <SinglePostStyled id={id} currentUser={currentUser} post={post} />}
+  </SinglePostContainer>
+);

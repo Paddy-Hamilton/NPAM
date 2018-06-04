@@ -4,11 +4,7 @@ import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import Modal from '@material-ui/core/Modal';
-import { SIGNIN, TOGGLE_SIGNIN_MODAL } from '../../graphql/mutations.graphql';
-import { SIGNIN_MODAL_OPEN, CURRENT_USER } from '../../graphql/queries.graphql';
-import { Mutation, Query } from 'react-apollo';
-import { adopt } from 'react-adopt';
-
+import { SignInContainer } from './Container';
 const styles = theme => ({
   container: {
     display: 'flex',
@@ -30,16 +26,6 @@ const styles = theme => ({
   }
 });
 
-const Composed = adopt({
-  isOpen: <Query query={SIGNIN_MODAL_OPEN}>{() => {}}</Query>,
-  signin: ({ password, email, render }) => (
-    <Mutation mutation={SIGNIN} variables={{ email, password }} refetchQueries={res => [{ query: CURRENT_USER }]}>
-      {(mutation, result) => render({ mutation, result })}
-    </Mutation>
-  ),
-  toggle: <Mutation mutation={TOGGLE_SIGNIN_MODAL}>{() => {}}</Mutation>
-});
-
 class SignIn extends Component {
   state = {
     email: '',
@@ -52,67 +38,67 @@ class SignIn extends Component {
   };
 
   render() {
-    const { classes } = this.props;
+    const { classes, isOpen, signin, toggle } = this.props;
     const { email, password } = this.state;
     return (
-      <Composed email={email} password={password}>
-        {({ isOpen, signin, toggle }) => {
-          return (
-            <Modal
-              aria-labelledby="Sign In"
-              aria-describedby="Sign user in"
-              open={isOpen.data.signinModalOpen}
-              onClose={toggle}
-            >
-              <div className={classes.paper}>
-                <form
-                  className={classes.container}
-                  autoComplete="off"
-                  onSubmit={e => {
-                    e.preventDefault();
-                    return signin
-                      .mutation()
-                      .then(res => {
-                        if (res.data) {
-                          toggle();
-                        }
-                      })
-                      .catch(err => {
-                        console.error(err);
-                      });
-                  }}
-                >
-                  <TextField
-                    id="email"
-                    label="Email"
-                    value={email}
-                    onChange={this.handleChange('email')}
-                    margin="normal"
-                    required
-                    fullWidth
-                  />
-                  <TextField
-                    required
-                    label="Password"
-                    type="password"
-                    fullWidth
-                    margin="normal"
-                    value={password}
-                    onChange={this.handleChange('password')}
-                  />
-                  <Button variant="raised" type="submit" color="primary" className={classes.submit}>
-                    Login
-                  </Button>
-                </form>
-              </div>
-            </Modal>
-          );
-        }}
-      </Composed>
+      <Modal
+        aria-labelledby="Sign In"
+        aria-describedby="Sign user in"
+        open={isOpen.data.signinModalOpen}
+        onClose={toggle}
+      >
+        <div className={classes.paper}>
+          <form
+            className={classes.container}
+            autoComplete="off"
+            onSubmit={e => {
+              e.preventDefault();
+              return signin({
+                variables: { email, password }
+              })
+                .then(res => {
+                  if (res.data) {
+                    toggle();
+                  }
+                })
+                .catch(err => {
+                  console.error(err);
+                });
+            }}
+          >
+            <TextField
+              id="email"
+              label="Email"
+              value={email}
+              onChange={this.handleChange('email')}
+              margin="normal"
+              required
+              fullWidth
+            />
+            <TextField
+              required
+              label="Password"
+              type="password"
+              fullWidth
+              margin="normal"
+              value={password}
+              onChange={this.handleChange('password')}
+            />
+            <Button variant="raised" type="submit" color="primary" className={classes.submit}>
+              Login
+            </Button>
+          </form>
+        </div>
+      </Modal>
     );
   }
 }
 
 SignIn.propTypes = {};
 
-export default withStyles(styles)(SignIn);
+export const SignInStyled = withStyles(styles)(SignIn);
+export default () => (
+  <SignInContainer>
+    {({ isOpen, signin, toggle }) => <SignInStyled isOpen={isOpen} signin={signin} toggle={toggle} />}
+  </SignInContainer>
+);

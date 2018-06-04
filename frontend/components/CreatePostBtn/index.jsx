@@ -14,27 +14,18 @@ const styles = theme => ({
   }
 });
 
-class CreatePostBtn extends Component {
-  render() {
-    const { classes } = this.props;
-    return (
-      <React.Fragment>
-        <Mutation mutation={TOGGLE_POST_MODAL_OPEN}>
-          {toggleEditPostModal => (
-            <Button
-              variant="fab"
-              color="primary"
-              aria-label="add"
-              className={classes.btn}
-              onClick={toggleEditPostModal}
-            >
-              <AddIcon />
-            </Button>
-          )}
-        </Mutation>
-      </React.Fragment>
-    );
-  }
-}
+const CreatePostBtn = ({ classes }) => {
+  return (
+    <React.Fragment>
+      <Mutation mutation={TOGGLE_POST_MODAL_OPEN}>
+        {toggleEditPostModal => (
+          <Button variant="fab" color="primary" aria-label="add" className={classes.btn} onClick={toggleEditPostModal}>
+            <AddIcon />
+          </Button>
+        )}
+      </Mutation>
+    </React.Fragment>
+  );
+};
 
 export default withStyles(styles)(CreatePostBtn);

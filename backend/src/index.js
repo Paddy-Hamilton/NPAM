@@ -1,5 +1,5 @@
 /* eslint-disable */
-require("dotenv").config({ path: "variables.env" });
+require("dotenv").config({ path: ".env" });
 /* eslint-enable */
 const jwt = require("jsonwebtoken");
 const createServer = require("./createServer");
@@ -34,7 +34,7 @@ server.start(
   {
     cors: {
       credentials: true,
-      origin: "http://localhost:8080"
+      origin: ["https://nam-demo.now.sh", "http://localhost:8080"]
     },
     port: 4000
   },

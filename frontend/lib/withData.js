@@ -2,13 +2,10 @@ import withApollo from 'next-with-apollo';
 import ApolloClient from 'apollo-boost';
 import { EDIT_POST_MODAL_OPEN, SIGNIN_MODAL_OPEN } from '../graphql/queries.graphql';
 // can also be a function that accepts a `headers` object (SSR only) and returns a config
-
+process.env.NODE_ENV;
 function createClient({ headers }) {
   return new ApolloClient({
-    uri:
-      process.env.NODE_ENV === 'development'
-        ? 'http://localhost:4000'
-        : 'https://eu1.prisma.sh/paddy-hamilton-edb868/nam-backend/dev',
+    uri: process.env.NODE_ENV === 'development' ? 'http://localhost:4000' : process.env.API_ENDPOINT,
     connectToDevTools: true, // Disables forceFetch on the server (so queries are only run once)
     request: async operation => {
       operation.setContext({

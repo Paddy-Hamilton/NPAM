@@ -1,6 +1,5 @@
 import React from 'react';
 import PageLayout from '../components/PageLayout';
-import GetPostsQuery from '../components/GetPostsQuery';
 import PostGrid from '../components/PostGrid';
 import CreatePostBtn from '../components/CreatePostBtn';
 import EditPostModal from '../components/EditPostModal';
@@ -10,7 +9,7 @@ class Index extends React.Component {
   render() {
     return (
       <PageLayout>
-        <GetPostsQuery render={(posts, currentUser) => <PostGrid posts={posts} currentUser={currentUser} />} />
+        <PostGrid />
         <Query query={CURRENT_USER}>
           {({ loading, error, data: { me } }) => {
             if (loading || !me) return null;

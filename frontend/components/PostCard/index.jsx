@@ -62,44 +62,32 @@ const styles = theme => ({
   }
 });
 
-class PostCard extends Component {
-  formatDateTime = dt => {
-    return moment(dt).format('l');
-  };
-  render() {
-    const {
-      post: { img, title, author, text, createdAt, id },
-      classes,
-      currentUser,
-      theme
-    } = this.props;
+const PostCard = ({ post: { img, title, author, text, createdAt, id }, classes, currentUser, theme }) => {
+  return (
+    <Link as={`/a/${id}`} href={`/post?id=${id}`}>
+      <Card className={classes.post}>
+        <div className={classes.mediaContainer}>
+          <CardMedia className={classes.media} image={img} title="Post image" />
+        </div>
 
-    return (
-      <Link as={`/a/${id}`} href={`/post?id=${id}`}>
-        <Card className={classes.post}>
-          <div className={classes.mediaContainer}>
-            <CardMedia className={classes.media} image={img} title="Post image" />
+        <CardContent className={classes.content}>
+          <Typography gutterBottom variant="headline" component="h2" className={classes.contentItem}>
+            {title}
+          </Typography>
+          <Typography component="p" gutterBottom className={classes.contentItem}>
+            {truncate(text, 90)}
+          </Typography>
+          <div className={`${classes.context} ${classes.contentItem}`}>
+            <Typography>{author.name}</Typography>
+            <Typography variant="caption">
+              <small>{moment(createdAt).format('MMMM Do YYYY')}</small>
+            </Typography>
           </div>
-
-          <CardContent className={classes.content}>
-            <Typography gutterBottom variant="headline" component="h2" className={classes.contentItem}>
-              {title}
-            </Typography>
-            <Typography component="p" gutterBottom className={classes.contentItem}>
-              {truncate(text, 90)}
-            </Typography>
-            <div className={`${classes.context} ${classes.contentItem}`}>
-              <Typography>{author.name}</Typography>
-              <Typography variant="caption">
-                <small>{moment(createdAt).format('MMMM Do YYYY')}</small>
-              </Typography>
-            </div>
-          </CardContent>
-        </Card>
-      </Link>
-    );
-  }
-}
+        </CardContent>
+      </Card>
+    </Link>
+  );
+};
 
 PostCard.propTypes = {
   post: PropTypes.object.isRequired

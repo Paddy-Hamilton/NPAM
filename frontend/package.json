@@ -31,14 +31,23 @@
     "uuid": "^3.2.1"
   },
   "scripts": {
-    "dev": "rimraf node_modules/.cache && node server.js ",
-    "build": "rimraf node_modules/.cache && next build",
-    "start": "rimraf node_modules/.cache && next start "
+    "dev": "NODE_ENV=development rimraf node_modules/.cache && node server.js ",
+    "build": "next build",
+    "start": "NODE_ENV=production node server.js",
+    "test": "jest --watch",
+    "test:updateSnap": "jest --updateSnapshot",
+    "deploy": "now --public --regions bru -e NODE_ENV=production "
   },
   "devDependencies": {
+    "babel-jest": "^23.0.1",
     "babel-loader": "^7.1.4",
     "babel-plugin-inline-import-graphql-ast": "^2.3.7",
+    "enzyme": "^3.3.0",
+    "enzyme-adapter-react-16": "^1.1.1",
+    "enzyme-to-json": "^3.3.4",
     "graphql-import": "^0.5.2",
+    "jest": "^23.1.0",
+    "jest-transform-graphql": "^2.1.0",
     "next-plugin-graphql": "0.0.1"
   },
   "babel": {

@@ -21,7 +21,7 @@ const Composed = adopt({
   ),
   currentUser: <Query query={CURRENT_USER}>{() => {}}</Query>
 });
-class GetPostsQuery extends Component {
+class PostGridContainer extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -55,25 +55,16 @@ class GetPostsQuery extends Component {
   render() {
     return (
       <Composed>
-        {({
-          posts: {
-            loading,
-            error,
-            networkStatus,
-            data: {
-              posts,
-              postsConnection: {
-                aggregate: { count }
-              }
-            },
-            fetchMore
-          },
-          currentUser: {
-            data: { me }
-          }
-        }) => {
+        {({ posts: { loading, error, networkStatus, data, fetchMore }, currentUser }) => {
           if (loading) <p>Loading...</p>;
           if (error) return `Error! ${error.message}`;
+          const {
+            posts,
+            postsConnection: {
+              aggregate: { count }
+            }
+          } = data;
+          const { me } = currentUser.data;
           return (
             <InfiniteScroll
               pageStart={0}
@@ -85,7 +76,7 @@ class GetPostsQuery extends Component {
                 </div>
               }
             >
-              {this.props.render(posts, me)}
+              {this.props.children(posts, me)}
             </InfiniteScroll>
           );
         }}
@@ -94,4 +85,4 @@ class GetPostsQuery extends Component {
   }
 }
 
-export default GetPostsQuery;
+export default PostGridContainer;
