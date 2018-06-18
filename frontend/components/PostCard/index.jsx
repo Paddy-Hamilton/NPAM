@@ -11,6 +11,7 @@ import Typography from '@material-ui/core/Typography';
 import Link from 'next/link';
 import moment from 'moment';
 import truncate from 'truncate';
+
 const styles = theme => ({
   post: {
     position: 'relative',
